@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Happy Birthday Sister 💖</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  text-align: center;
+  background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+  color: #fff;
+  overflow-x: hidden;
+}
+
+.container {
+  padding: 20px;
+}
+
+h1 {
+  font-size: 3em;
+  margin-top: 20px;
+}
+
+img {
+  max-width: 85%;
+  border-radius: 20px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+}
+
+button {
+  padding: 15px 25px;
+  font-size: 18px;
+  border: none;
+  border-radius: 10px;
+  background: #ff4d6d;
+  color: white;
+  cursor: pointer;
+}
+button:hover {
+  background: #e63950;
+}
+
+#message {
+  margin-top: 20px;
+  font-size: 1.5em;
+  min-height: 60px;
+}
+
+.countdown {
+  margin-top: 10px;
+  font-size: 1.2em;
+}
+
+.confetti {
+  position: fixed;
+  width: 10px;
+  height: 10px;
+  top: 0;
+  animation: fall 5s linear infinite;
+}
+
+@keyframes fall {
+  to { transform: translateY(100vh); }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <h1>🎂 Happy Birthday Sister 💖</h1>
+
+  <img id="slideshow" src="your-poster.png">
+
+  <div class="countdown" id="countdown"></div>
+
+  <br><br>
+  <button onclick="startSurprise()">Click for Surprise 🎁</button>
+
+  <div id="message"></div>
+</div>
+
+<audio id="music" src="https://www.bensound.com/bensound-music/bensound-happyrock.mp3"></audio>
+
+<script>
+const text = "You are not just my best friend... 💕 You are my sister forever. I love you endlessly 💖";
+let i = 0;
+
+function typeEffect() {
+  if (i < text.length) {
+    document.getElementById("message").innerHTML += text.charAt(i);
+    i++;
+    setTimeout(typeEffect, 40);
+  }
+}
+
+function createConfetti() {
+  for (let i = 0; i < 50; i++) {
+    let confetti = document.createElement("div");
+    confetti.classList.add("confetti");
+    confetti.style.left = Math.random() * window.innerWidth + "px";
+    confetti.style.backgroundColor = 
+      ["#ff4d6d","#ffffff","#ffd166","#06d6a0","#118ab2"][Math.floor(Math.random()*5)];
+    confetti.style.animationDuration = (Math.random()*3+2)+"s";
+    document.body.appendChild(confetti);
+  }
+}
+
+function startSurprise() {
+  document.getElementById("music").play();
+  createConfetti();
+  typeEffect();
+}
+
+const images = ["your-poster.png","photo2.jpg","photo3.jpg"];
+let index = 0;
+
+setInterval(() => {
+  index = (index + 1) % images.length;
+  document.getElementById("slideshow").src = images[index];
+}, 3000);
+
+const birthday = new Date("2026-05-01").getTime();
+
+setInterval(() => {
+  let now = new Date().getTime();
+  let diff = birthday - now;
+
+  if (diff < 0) {
+    document.getElementById("countdown").innerHTML = "🎉 It's her Birthday today!";
+    return;
+  }
+
+  let days = Math.floor(diff / (1000*60*60*24));
+  let hours = Math.floor((diff % (1000*60*60*24))/(1000*60*60));
+  let mins = Math.floor((diff % (1000*60*60))/(1000*60));
+
+  document.getElementById("countdown").innerHTML =
+    "⏳ Countdown: " + days + "d " + hours + "h " + mins + "m";
+}, 1000);
+</script>
+
+</body>
+</html>
